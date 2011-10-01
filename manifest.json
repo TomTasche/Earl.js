@@ -1,0 +1,23 @@
+{
+	"name": "Earl",
+	"version": "0.1",
+	"description": "Enter URLs without leaving fullscreen mode.",
+	"homepage_url": "http://earl.tomtasche.at/",
+	
+	"icons": {
+		"16": "img/icon_16.png",
+		"128": "img/icon_128.png"
+	},
+	
+
+	"app": {
+		"launch": {
+			"local_path": "earl.html"
+		}
+	},
+	
+	"permissions": [
+		"history",
+		"bookmarks"
+ 	]
+}

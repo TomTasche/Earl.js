@@ -1,0 +1,56 @@
+<html>
+	<head>
+		<title>Earl</title>
+
+		<script type="text/javascript">
+			function parse() {
+				var form = document.forms["earl"];
+				var input = form.input.value;
+
+				if (input.substring(0, 2) == "//") {
+					launch("https://" + input.substring(2, input.length));
+				} else if (input.substring(0, 3) != "http" && input.substring(0, 3) != "https") {
+					input = findUrl(input);
+				} else {
+					launch(input);
+				}
+			}
+
+			function launch(input) {
+				window.location.href = input;
+			}
+
+			function findUrl(input) {
+				chrome.bookmarks.search(input, function(bookmarkItems) {
+					if (bookmarkItems[0] != null) {
+						launch(bookmarkItems[0].url);
+					} else {
+						chrome.history.search({'text': input}, function(historyItems) {
+							if (historyItems[0] != null) {
+								launch(historyItems[0].url);
+							} else {
+								launch("http://" + input);
+							}
+						});
+					}
+				});
+			}
+		</script>
+	</head>
+
+	<body>
+		<div align="center">
+			<h1>Give Earl an URL...</h1>
+
+			<br />
+			<br />
+			<a href="http://earl.tomtasche.at/">(?)</a>
+			<br />
+			<br />
+
+			<form name="earl" action="javascript:parse();">
+				<input autofocus="autofocus" type="text" name="input" style="font-size: 40px" placeholder="URL goes here..."></input>
+			</form>
+		</div>
+	</body>
+</html>
